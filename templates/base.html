@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %} - CIS451 Final Project</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        View project source code <a href="https://github.com/sampeters747/cis451-chessdb">here</a>.
+        {% endblock %}
+    </div>
+</body>
+</html>
+

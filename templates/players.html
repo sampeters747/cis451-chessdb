@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Players{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Players</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First</th>
+            <th>Last</th>
+            <th>Birth Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+        <tr>
+            <td>{{ player.id }}</td>
+            <td>{{ player.first }}</td>
+            <td>{{ player.last }}</td>
+            <td>{{ player.birth_year }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<form class="pure-form" action="/players/create" method="POST">
+    <fieldset>
+        <legend>Add a new player in the database</legend>
+        <input name="first" type="text" placeholder="Firstname" />
+        <input name="last" type="text" placeholder="Lastname" />
+        <input name="birth_year" type="text" placeholder="Birth Year" />
+        <button type="submit" class="pure-button pure-button-primary">Add Player</button>
+    </fieldset>
+</form>
+
+<hr>
+<form class="pure-form" action="/players/delete" method="POST">
+    <fieldset>
+        <legend>Delete a player by entering their ID</legend>
+        <input name="player_id" type="number" placeholder="Player ID" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Player</button>
+    </fieldset>
+</form>
+
+{% endblock %}
