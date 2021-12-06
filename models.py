@@ -15,20 +15,20 @@ class Player(Base):
     # Non-columns
     # ratings variable provides easy access to relevant rows in Ratings table by checking what Rating.player_id foreign keys
     # reference the player object
-    ratings = relationship("Rating", back_populates="player")
-    tournaments = relationship("TournamentEntry", back_populates="player")
+    ratings = relationship("Rating", back_populates="player", cascade="all, delete, delete-orphan")
+    tournaments = relationship("TournamentEntry", back_populates="player", cascade="all, delete, delete-orphan")
 
 class Organization(Base):
     __tablename__ = "organizations"
     # Columns
-    code = Column(String(8), primary_key=True, index=True)
-    name = Column(String(36))
+    code = Column(String(10), primary_key=True, index=True)
+    name = Column(String(48))
 
     # Non-column, provides easy access to relevant rows in Ratings table by checking what Rating.org_code foreign keys
     # reference the player object
-    issued_ratings = relationship("Rating", back_populates="org")
+    issued_ratings = relationship("Rating", back_populates="org", cascade="all, delete, delete-orphan")
     # More non-columns
-    tournaments = relationship("Tournament", back_populates="org")
+    tournaments = relationship("Tournament", back_populates="org", cascade="all, delete, delete-orphan")
 
 class Rating(Base):
     __tablename__ = "ratings"

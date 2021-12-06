@@ -1,3 +1,4 @@
+from os import name
 from re import template
 from typing import List, Optional
 
@@ -53,7 +54,6 @@ async def delete_player(request: Request, db: Session = Depends(get_db), player_
                                                        "players": db_players,
                                                        "msg": msg})
 
-
 @app.post("/players/create", response_class=HTMLResponse)
 async def create_player(request: Request, db: Session = Depends(get_db), first: str = Form(...), last: str = Form(...), birth_year: int = Form(...)):
     player = schemas.PlayerCreate(
@@ -102,8 +102,7 @@ async def delete_org(request: Request, db: Session = Depends(get_db), org_code: 
 @app.get("/ratings", response_class=HTMLResponse)
 async def ratings(request: Request, db: Session = Depends(get_db)):
     db_ratings = crud.get_rating(db)
-    msg = None
-    return templates.TemplateResponse("ratings.html", {"request": request, "ratings": db_ratings, "msg": msg})
+    return templates.TemplateResponse("ratings.html", {"request": request, "ratings": db_ratings})
 
 
 @app.post("/ratings/create", response_class=HTMLResponse)
@@ -116,3 +115,42 @@ async def create_rating(request: Request, db: Session = Depends(get_db), player_
         msg = f"Attempt to add rating of {rating_obj.rating_number} was unsuccessful. Do the player and organization exist?"
     db_ratings = crud.get_rating(db)
     return templates.TemplateResponse("ratings.html", {"request": request, "ratings": db_ratings, "msg": msg})
+
+@app.post("/ratings/top", response_class=HTMLResponse)
+async def find_top_rating(request: Request, db: Session = Depends(get_db), org_code: str = Form(...)):
+    db_rating = crud.find_top_rating(db, org_code)
+    if db_rating:
+        msg = f"The top rated player in {db_rating.org.name} is {db_rating.player.first+db_rating.player.first} with a rating of {db_rating.rating_number}"
+    else:
+        msg = f"Attempt to find the top rated player in the organization {org_code} was unsuccessful. Are you sure the organization has issued any ratings?"
+    db_ratings = crud.get_rating(db)
+    return templates.TemplateResponse("ratings.html", {"request": request, "ratings": db_ratings, "msg": msg})
+
+@app.get("/tournaments", response_class=HTMLResponse)
+async def ratings(request: Request, db: Session = Depends(get_db)):
+    db_tournaments = crud.get_tournament(db)
+    return templates.TemplateResponse("tournaments.html", {"request": request, "tournaments": db_tournaments})
+
+@app.post("/tournaments/create", response_class=HTMLResponse)
+async def create_tournament(request: Request, db: Session = Depends(get_db), year: int = Form(...), org_code: str = Form(...), name: str = Form(...)):
+    tournament_obj = schemas.TournamentCreate(org_code=org_code, name=name, year=year)
+    db_tournament = crud.create_tournament(db, tournament_obj)
+    if db_tournament:
+        msg = f'Successfully created tournament named: "{db_tournament.name}" with ID:{db_tournament.id}. Add some players to the tournament using the second form!'
+    else:
+        msg = f"Attempt to create tournament was unsuccessful. Does the organization exist?"
+    db_tournaments = crud.get_tournament(db)
+    return templates.TemplateResponse("tournaments.html", {"request": request, "tournaments": db_tournaments, "msg": msg})
+
+@app.post("/tournaments/register", response_class=HTMLResponse)
+async def register_player(request: Request, db: Session = Depends(get_db), tournament_id: int = Form(...), player_id: int = Form(...)):
+    entry_obj = schemas.TournamentEntryCreate(tournament_id=tournament_id, player_id=player_id)
+    db_tournament_entry = crud.register_tournament_player(db, entry_obj)
+    if db_tournament_entry:
+        msg = f"Successfully registered {db_tournament_entry.player.first + ' '+ db_tournament_entry.player.last} in the tournament {db_tournament_entry.tournament.name}"
+    else:
+        msg = f"Player registration was unsuccessful. Are you sure the player ID and tournament ID  exist?"
+    db_tournaments = crud.get_tournament(db)
+    return templates.TemplateResponse("tournaments.html", {"request": request,
+                                                             "tournaments": db_tournaments,
+                                                             "msg": msg})

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Text
 from sqlalchemy.orm import Session
 import models
 import schemas
@@ -68,4 +68,37 @@ def create_rating(db: Session, rating: schemas.RatingCreate):
     except:
         db.rollback()
         print("Unable to create rating")
+        return None
+
+def find_top_rating(db: Session, org_code: str):
+    return db.query(models.Rating).filter(models.Rating.org_code == org_code).order_by(models.Rating.rating_number.desc()).first()
+
+def create_tournament(db: Session, tournament: schemas.TournamentCreate):
+    db_tournament = models.Tournament(org_code=tournament.org_code, name=tournament.name, year=tournament.year)
+    try:
+        db.add(db_tournament)
+        db.commit()
+        db.refresh(db_tournament)
+        return db_tournament
+    except:
+        db.rollback()
+        print("Unable to create tournament")
+        return None
+
+def get_tournament(db: Session, tournament_id: Optional[int]=None):
+    if tournament_id:
+        return db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
+    else:
+        return db.query(models.Tournament).all()
+
+def register_tournament_player(db: Session, entry: schemas.TournamentEntryCreate):
+    db_entry = models.TournamentEntry(tournament_id=entry.tournament_id, player_id=entry.player_id)
+    try:
+        db.add(db_entry)
+        db.commit()
+        db.refresh(db_entry)
+        return db_entry
+    except:
+        db.rollback()
+        print("Unable to register player")
         return None
