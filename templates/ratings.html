@@ -56,21 +56,12 @@
 </form>
 
 <hr>=
-<form class="pure-form" action="/organizations/delete" method="POST">
+<form class="pure-form" action="/ratings/top" method="POST">
     <fieldset>
-        <legend>Delete a organization by entering their org code</legend>
-        <input name="org_code" type="text" placeholder="Code" />
-        <button type="submit" class="pure-button pure-button-primary">Delete Organization</button>
+        <legend>Find the top rated player in an organization</legend>
+        <input name="org_code" type="text" placeholder="Organization Code" />
+        <button type="submit" class="pure-button pure-button-primary">Find Player</button>
     </fieldset>
 </form>
-
-<!-- <hr>
-<form class="pure-form" action="/players/delete" method="POST">
-    <fieldset>
-        <legend>Delete a player by entering their ID</legend>
-        <input name="player_id" type="number" placeholder="Player ID" />
-        <button type="submit" class="pure-button pure-button-primary">Delete Player</button>
-    </fieldset>
-</form> -->
 
 {% endblock %}
