@@ -2,15 +2,25 @@
 <html lang="en">
 <head>
     {% block head %}
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.8.2/dist/paper.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/css/materialize.min.css"> -->
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/js/materialize.min.js"></script> -->
+
     <title>{% block title %}{% endblock %} - CIS451 Final Project</title>
     {% endblock %}
 </head>
 <body>
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div class="paper container" id="content">{% block content %}{% endblock %}
+        <div>View project source code 
+        <a href="https://github.com/sampeters747/cis451-chessdb">here</a></div>
+        <div>Return to index page by clicking
+        <a href="/">here</a></div>
+    </div>
     <div id="footer">
         {% block footer %}
-        View project source code <a href="https://github.com/sampeters747/cis451-chessdb">here</a>.
+        <!-- View project source code <a href="https://github.com/sampeters747/cis451-chessdb">here</a>. -->
         {% endblock %}
     </div>
 </body>

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Organizations{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Organizations</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Full Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for org in organizations %}
+        <tr>
+            <td>{{ org.code }}</td>
+            <td>{{ org.name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<form class="pure-form" action="/organizations/create" method="POST">
+    <fieldset>
+        <legend>Add a new organization</legend>
+        <label for="code">Code</label>
+        <input type="text" name="code" placeholder="Code" />
+        <span class="pure-form-message">Organization code should be unique</span>
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="Name" />
+        <button type="submit" class="pure-button pure-button-primary">Add Organization</button>
+    </fieldset>
+</form>
+
+<hr>=
+<form class="pure-form" action="/organizations/delete" method="POST">
+    <fieldset>
+        <legend>Delete a organization by entering their org code</legend>
+        <input name="org_code" type="text" placeholder="Code" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Organization</button>
+    </fieldset>
+</form>
+
+<!-- <hr>
+<form class="pure-form" action="/players/delete" method="POST">
+    <fieldset>
+        <legend>Delete a player by entering their ID</legend>
+        <input name="player_id" type="number" placeholder="Player ID" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Player</button>
+    </fieldset>
+</form> -->
+
+{% endblock %}

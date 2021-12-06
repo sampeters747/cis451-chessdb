@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Ratings{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Ratings</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Rating</th>
+            <th>Title</th>
+            <th>Player ID</th>
+            <th>Player Name</th>
+            <th>Org Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in ratings %}
+        <tr>
+            <td>{{ r.rating_number }}</td>
+            {% if r.title %}
+            <td>{{ r.title }}</td>
+            {% else %}
+            <td>None</td>
+            {% endif %}
+            <td>{{ r.player_id }}</td>
+            <td>{{ r.player.first + " " + r.player.last }}</td>
+            <td>{{ r.org_code }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<form class="pure-form" action="/ratings/create" method="POST">
+    <fieldset>
+        <legend>Add a new rating</legend>
+        <label for="player_id">Player ID</label>
+        <input type="number" name="player_id" placeholder="Player ID" required/>
+        <label for="org_code">Org Code</label>
+        <input type="text" name="org_code" placeholder="Code" required/>
+        <label for="rating">Rating</label>
+        <input type="number" step="1" name="rating" placeholder="Rating" required/>
+        <label for="title">Title</label>
+        <input type="text" name="title" placeholder="Title"/>
+        <span class="pure-form-message">Titles are optional</span><br>
+        <button type="submit" class="pure-button pure-button-primary">Add Rating</button>
+    </fieldset>
+</form>
+
+<hr>=
+<form class="pure-form" action="/organizations/delete" method="POST">
+    <fieldset>
+        <legend>Delete a organization by entering their org code</legend>
+        <input name="org_code" type="text" placeholder="Code" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Organization</button>
+    </fieldset>
+</form>
+
+<!-- <hr>
+<form class="pure-form" action="/players/delete" method="POST">
+    <fieldset>
+        <legend>Delete a player by entering their ID</legend>
+        <input name="player_id" type="number" placeholder="Player ID" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Player</button>
+    </fieldset>
+</form> -->
+
+{% endblock %}

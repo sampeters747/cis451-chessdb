@@ -36,9 +36,9 @@
 <form class="pure-form" action="/players/create" method="POST">
     <fieldset>
         <legend>Add a new player in the database</legend>
-        <input name="first" type="text" placeholder="Firstname" />
-        <input name="last" type="text" placeholder="Lastname" />
-        <input name="birth_year" type="text" placeholder="Birth Year" />
+        <input name="first" type="text" placeholder="Firstname" required/>
+        <input name="last" type="text" placeholder="Lastname" required/>
+        <input name="birth_year" type="number" step="1" placeholder="Birth Year" required/>
         <button type="submit" class="pure-button pure-button-primary">Add Player</button>
     </fieldset>
 </form>
@@ -47,7 +47,7 @@
 <form class="pure-form" action="/players/delete" method="POST">
     <fieldset>
         <legend>Delete a player by entering their ID</legend>
-        <input name="player_id" type="number" placeholder="Player ID" />
+        <input name="player_id" type="number" placeholder="Player ID" required/>
         <button type="submit" class="pure-button pure-button-primary">Delete Player</button>
     </fieldset>
 </form>
