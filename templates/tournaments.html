@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Tournaments{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Tournaments</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Organizer</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Registered Players</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tournaments %}
+        <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.org_code }}</td>
+            <td>{{ t.name }}</td>
+            <td>{{ t.year }}</td>
+            <td>{{ t.players|length }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<form class="pure-form" action="/tournaments/create" method="POST">
+    <fieldset>
+        <legend>Create a new tournament</legend>
+        <label for="org_code">Organizer</label>
+        <input type="text" name="org_code" placeholder="Org Code" required/>
+        <input type="text" name="name" placeholder="Tournament Name" required/>
+        <input type="number" step="1" name="year" placeholder="Year" required/>
+        <button type="submit" class="pure-button pure-button-primary">Create Tournament</button>
+    </fieldset>
+</form>
+
+<hr>=
+<form class="pure-form" action="/tournaments/register" method="POST">
+    <fieldset>
+        <legend>Register a player in a tournament</legend>
+        <input name="tournament_id" type="number" step="1" placeholder="Tournament ID" />
+        <input name="player_id" type="number" step="1" placeholder="Player ID" />
+        <button type="submit" class="pure-button pure-button-primary">Register Player</button>
+    </fieldset>
+</form>
+
+<!-- <hr>
+<form class="pure-form" action="/players/delete" method="POST">
+    <fieldset>
+        <legend>Delete a player by entering their ID</legend>
+        <input name="player_id" type="number" placeholder="Player ID" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Player</button>
+    </fieldset>
+</form> -->
+
+{% endblock %}
