@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}User Guide{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>User Guide</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<p>
+    Each application exists as it's own page, and each piece of functionality is implemented as its own form on a page. To use an application, just submit information through one of the forms and watch the information update/read the displayed message in red.
+</p>
+    
+<p>You can quickly navigate between pages/applications by clicking on the return to index or applications links at the bottom of every page.
+</p>
+<h3>Common Input Types</h3>
+<p>Here are some common inputs you might be asked for on different pages.</p>
+<p>
+    player ID: Integer. Must be the ID of an existing player in the Player table. You can see the ID of every player in the players application.
+</p>
+<p>
+    org code: String shorter than 10 characters. Must be the code of an existing organization in the Organization table. You can see the code of every organization in the organizations application.
+</p>
+
+<h3>User Warnings</h3> 
+<p>
+None of the form inputs are optional. Because of time constraints on the project, I wasn't able to build functionality for the application to gracefully handle missing form inputs. If you skip inputs, you'll most likely get an error page.
+</p>
+<p>
+    Going back using your browser can cause a form to be resubmitted. It's recommended that you only navigate through the project using only the links on the page. There are links at the bottom of every page to the source code, index page, and applications page.
+</p>
+
+{% endblock %}
