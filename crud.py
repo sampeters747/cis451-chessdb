@@ -1,7 +1,8 @@
-from typing import Optional, Text
+from typing import Optional, Tuple, List
 from sqlalchemy.orm import Session
 import models
 import schemas
+import chess_utils
 
 def get_player(db: Session, player_id: Optional[int]=None):
     if player_id:
@@ -102,3 +103,29 @@ def register_tournament_player(db: Session, entry: schemas.TournamentEntryCreate
         db.rollback()
         print("Unable to register player")
         return None
+
+def create_game(db: Session, game: schemas.GameCreate):
+    try:
+        db_game = models.Game(white_id=game.white_id, black_id=game.black_id, tournament_id=game.tournament_id)
+        db.add(db_game)
+        db.flush()
+        parsed_moves = chess_utils.parse_moves(game.game_str)
+        for i,m in enumerate(parsed_moves):
+            move_obj = schemas.MoveCreate(game_id=db_game.id, ply=i, move=m)
+            db_move = models.Move(game_id=move_obj.game_id, ply=move_obj.ply, move=move_obj.move)
+            db.add(db_move)
+        db.commit()
+        db.refresh(db_game)
+        return db_game
+    except:
+        db.rollback()
+        print("Unable to add game")
+        return None
+
+def get_game(db: Session, game_id: Optional[int]=None, player_id: Optional[int]=None):
+    if game_id:
+        return db.query(models.Game).filter(models.Game.id == game_id).first()
+    elif game_id:
+        return db.query(models.Game).filter((models.Game.white_id == player_id) | (models.Game.white_id == player_id)).all()
+    else:
+        return db.query(models.Game).all()

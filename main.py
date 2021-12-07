@@ -165,3 +165,9 @@ async def register_player(request: Request, db: Session = Depends(get_db), tourn
     return templates.TemplateResponse("tournaments.html", {"request": request,
                                                              "tournaments": db_tournaments,
                                                              "msg": msg})
+
+
+@app.get("/games", response_class=HTMLResponse)
+async def games(request: Request, db: Session = Depends(get_db)):
+    db_games = crud.get_game(db)
+    return templates.TemplateResponse("game.html", {"request": request, "games": db_games})

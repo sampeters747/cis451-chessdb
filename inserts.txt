@@ -1,0 +1,10 @@
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (1, 1955, "Dave", "Smith");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (2, 1990, "Magnus", "Carlsen");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (3, 1992, "Liren", "Ding");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (4, 2003, "Alireza", "Firouzja");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (5, 1992, "Fabiano", "Caruana");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (6, 1993, "Wesley", "So");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (7, 1991, "Sam", "Shankland");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (8, 2000, "Jeffery", "Xiong");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (9, 1996, "Richard", "Rapport");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (10, 1983, "Alexander", "Grischuk");

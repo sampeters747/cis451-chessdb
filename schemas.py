@@ -90,7 +90,7 @@ class GameBase(BaseModel):
     result: int
 
 class GameCreate(GameBase):
-    pass
+    game_str: str
 
 class Game(GameBase):
     id: int

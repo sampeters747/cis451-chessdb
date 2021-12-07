@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Games{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Games</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Game ID</th>
+            <th>White</th>
+            <th>Black</th>
+            <th>Winner</th>
+            <th>Total moves</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for g in games %}
+        <tr>
+            <td>{{ g.id }}</td>
+            <td>{{ g.white.first +" "+g.white.last }}</td>
+            <td>{{ g.black.first +" "+g.black.last }}</td>
+            {% if g.result == 0 %}
+            <td>Black</td>
+            {% elif g.result == 1 %}
+            <td>White</td>
+            {% else %}
+            <td>Tie</td>
+            {% endif %}
+            <td>{{ g.moves|length }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<form class="pure-form" action="/organizations/create" method="POST">
+    <fieldset>
+        <legend>Enter a new game</legend>
+        <input type="number" step="1" name="white_id" placeholder="White Player ID" />
+        <input type="number" step="1" name="black_id" placeholder="Black Player ID" />
+        <label for="result">Winner</label>
+        <select name="result" >
+            <option value=1>White</option>
+            <option value=0>Black</option>
+            <option value=2>Draw</option>
+          </select>
+        <label for="game_str">Moves (see expected format <a>here</a>)</label>
+        <input type="text" name="game_str" placeholder="1.e4 e5 2.Ke2..." />
+        <button type="submit" class="pure-button pure-button-primary">Add Organization</button>
+    </fieldset>
+</form>
+<!-- 
+<hr>
+<form class="pure-form" action="/organizations/delete" method="POST">
+    <fieldset>
+        <legend>Delete a organization by entering their org code</legend>
+        <input name="org_code" type="text" placeholder="Code" />
+        <button type="submit" class="pure-button pure-button-primary">Delete Organization</button>
+    </fieldset>
+</form> -->
+
+
+{% endblock %}
