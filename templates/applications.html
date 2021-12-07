@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Applications</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<p>
+    Here's a list of links to applications I made to use the database along with their descriptions. Most applications also display data from whichever table they use.
+</p>
+<ol>
+    <li><a href="players">Players</a>:
+     Interface that allows a user to add a new player to the database, or delete a player from the database.
+    Creation only modifies the player table, while deletion has consequences on multiple other tables (Sponsor, Rating, Games) as the delete action causes more cascading deletes.
+    </li>
+    <li><a href="organizations">Organizations</a>: Interface that allows a user to add a new player to the database, or delete a player from the database. Organizations primary purpose is to issue ratings to players, and host tournaments. When creating an organization, org codes are expected to be unique. Creation only modifies the organization table, while deletion affects multiple tables.
+    </li>
+    <li><a href="ratings">Ratings</a>: Interface that shows ratings issued to players by different organizations. Allows a user to add a new rating or query for the highest rated player in an organization. Modifies the rating table, and queries the player and rating tables.</li>
+    <li><a href="tournaments">Tournaments</a>: Interface that allows a user to create a new tournament or add an existing player to an existing tournament.</li>
+    <li><a href="games">Games</a>: Displays games played between different players along with the result and the number of moves. Allows a user to save a new game in the database, or search for all the games played by a specific player (based on ID).</li>
+    <li><a href="sponsors">Sponsors</a>: Shows a list of all the sponsorships received by chess players. Allows a user to enter a player ID and find out the total amount that player received in sponsorships.</li>
+</ol>
+
+{% endblock %}

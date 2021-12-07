@@ -46,6 +46,10 @@ async def physicaldesign_page(request: Request):
 async def tablecontents_page(request: Request):
     return templates.TemplateResponse("tablecontents.html", {"request": request})
 
+@app.get("/applications", response_class=HTMLResponse)
+async def applications_page(request: Request):
+    return templates.TemplateResponse("applications.html", {"request": request})
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -135,7 +139,7 @@ async def create_rating(request: Request, db: Session = Depends(get_db), player_
 async def find_top_rating(request: Request, db: Session = Depends(get_db), org_code: str = Form(...)):
     db_rating = crud.find_top_rating(db, org_code)
     if db_rating:
-        msg = f"The top rated player in {db_rating.org.name} is {db_rating.player.first+db_rating.player.first} with a rating of {db_rating.rating_number}"
+        msg = f"The top rated player in {db_rating.org.name} is {db_rating.player.first} {db_rating.player.last} with a rating of {db_rating.rating_number}"
     else:
         msg = f"Attempt to find the top rated player in the organization {org_code} was unsuccessful. Are you sure the organization has issued any ratings?"
     db_ratings = crud.get_rating(db)
