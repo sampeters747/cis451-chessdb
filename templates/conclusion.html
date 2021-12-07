@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Conclusion{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Conclusion</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<p>
+    During the time I had for the final project, I was able to flesh out the entire database structure, build a system to effiently interact with the database using standard python libraries (see models.py and schema.py in the project source code) and build a frontend that allows a user to explore the data in the different tables, and perform different read/write applications on most of them.
+</p>
+<p>
+    From this experience, I think I have a new viewpoint on ORM libraries. While they do make some queries easier than regular SQL, I think still were significant tradeoffs of using them for this size project, as there was a lot of additional complexity associated with setting them up. So while querying is easier, it comes at the cost of effort upfront to learn the ORM library and describe your database in the libraries terms.
+</p>
+
+<p>
+    Starting the project, I expected to be able to build more complex/useful applications, but ended up spending a lot of time learning new libraries as the technologies I chose had a steeper learning curve than I anticipated. Specifically, I didn't have much experience with the FastApi, SQLAlchemy, and Jinja python libraries, and it took a while to ramp up on those. If I had more time, a few things I'd like to add would be:
+    <ul>
+        <li>
+            Better auto parsing of pgn files (right now the application is only capable of parsing the moves part of the pgn file, and the rest has to be manually entered). This would allow the bulk import of chess games, rather than manually entering them in the frontend interface.
+        </li>
+        <li>
+            Programmatically generated board states based on the submitted moves of a game. This would allow a user to query for games where a specific board position shows up, which would be really useful for many people.
+        </li>
+        <li>
+            Better data visualization. This is pretty self explanatory, but I felt like while I was able to easily access game data, I wasn't able to display it on the frontend in a way that would be useful.
+        </li>
+    </ul>
+</p>
+
+{% endblock %}

@@ -50,6 +50,14 @@ async def tablecontents_page(request: Request):
 async def applications_page(request: Request):
     return templates.TemplateResponse("applications.html", {"request": request})
 
+@app.get("/guide", response_class=HTMLResponse)
+async def guide_page(request: Request):
+    return templates.TemplateResponse("guide.html", {"request": request})
+
+@app.get("/conclusion", response_class=HTMLResponse)
+async def conclusion_page(request: Request):
+    return templates.TemplateResponse("conclusion.html", {"request": request})
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
