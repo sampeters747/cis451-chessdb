@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 import models
 import schemas
 import chess_utils
+from sqlalchemy import func
 
 def get_player(db: Session, player_id: Optional[int]=None):
     if player_id:
@@ -106,7 +107,7 @@ def register_tournament_player(db: Session, entry: schemas.TournamentEntryCreate
 
 def create_game(db: Session, game: schemas.GameCreate):
     try:
-        db_game = models.Game(white_id=game.white_id, black_id=game.black_id, tournament_id=game.tournament_id)
+        db_game = models.Game(white_id=game.white_id, black_id=game.black_id, result=game.result)
         db.add(db_game)
         db.flush()
         parsed_moves = chess_utils.parse_moves(game.game_str)
@@ -125,7 +126,18 @@ def create_game(db: Session, game: schemas.GameCreate):
 def get_game(db: Session, game_id: Optional[int]=None, player_id: Optional[int]=None):
     if game_id:
         return db.query(models.Game).filter(models.Game.id == game_id).first()
-    elif game_id:
-        return db.query(models.Game).filter((models.Game.white_id == player_id) | (models.Game.white_id == player_id)).all()
+    elif player_id:
+        return db.query(models.Game).filter((models.Game.white_id == player_id) | (models.Game.black_id == player_id)).all()
     else:
         return db.query(models.Game).all()
+
+def get_sponsor(db: Session, player_id: Optional[int]=None):
+    if player_id:
+        return db.query(models.Sponsor).filter(models.Sponsor.player_id == player_id).first()
+    else:
+        return db.query(models.Sponsor).all()
+
+def get_sponsor_total(db: Session, player_id: int):
+    total_query = db.query(models.Sponsor).with_entities(func.sum(models.Sponsor.amount).label("total")).filter(models.Sponsor.player_id == player_id).first()
+    result = total_query.total
+    return result

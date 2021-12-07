@@ -42,6 +42,10 @@ async def logicaldesign_page(request: Request):
 async def physicaldesign_page(request: Request):
     return templates.TemplateResponse("physical.html", {"request": request})
 
+@app.get("/tablecontents", response_class=HTMLResponse)
+async def tablecontents_page(request: Request):
+    return templates.TemplateResponse("tablecontents.html", {"request": request})
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -170,4 +174,48 @@ async def register_player(request: Request, db: Session = Depends(get_db), tourn
 @app.get("/games", response_class=HTMLResponse)
 async def games(request: Request, db: Session = Depends(get_db)):
     db_games = crud.get_game(db)
-    return templates.TemplateResponse("game.html", {"request": request, "games": db_games})
+    return templates.TemplateResponse("games.html", {"request": request, "games": db_games})
+
+@app.post("/games/create", response_class=HTMLResponse)
+async def create_game(request: Request, db: Session = Depends(get_db), white_id: int = Form(...), black_id: int = Form(...), result: int = Form(...), game_str: str = Form(...)):
+    game = schemas.GameCreate(white_id=white_id, black_id=black_id, result=result, game_str=game_str)
+    db_game = crud.create_game(db, game)
+    db_games = crud.get_game(db)
+    if db_game:
+        msg = f"Successfully added game with ID {db_game.id}"
+    else:
+        msg = f"Attempt to add game was unsuccessful. Do the player IDs exist?"
+    return templates.TemplateResponse("games.html", {"request": request,
+                                                             "games": db_games,
+                                                             "msg": msg})
+
+@app.post("/games/find", response_class=HTMLResponse)
+async def find_games(request: Request, db: Session = Depends(get_db), player_id: int = Form(...)):
+    player = crud.get_player(db, player_id=player_id)
+    if player:
+        db_games = crud.get_game(db, player_id=player_id)
+        if db_games:
+            msg = f"Filtered games to only ones played by {player.first} {player.last}"
+        else:
+            msg = f"No games found for {player.first} {player.last}"
+        return templates.TemplateResponse("games.html", {"request": request, "games": db_games, "msg": msg})
+    else:
+        msg = f"Player does not exist. Are you sure that player ID is correct?"
+        return templates.TemplateResponse("games.html", {"request": request, "games": [], "msg": msg})
+
+@app.get("/sponsors", response_class=HTMLResponse)
+async def sponsors(request: Request, db: Session = Depends(get_db)):
+    db_sponsors = crud.get_sponsor(db)
+    return templates.TemplateResponse("sponsors.html", {"request": request, "sponsors": db_sponsors})
+
+@app.post("/sponsors/total", response_class=HTMLResponse)
+async def sponsor_total(request: Request, db: Session = Depends(get_db), player_id: int = Form(...)):
+    player = crud.get_player(db, player_id=player_id)
+    db_sponsors = crud.get_sponsor(db)
+    if player:
+        total = crud.get_sponsor_total(db, player_id)
+        msg = f"Total sponsorship money received by {player.first} {player.last} is ${total}"
+        return templates.TemplateResponse("sponsors.html", {"request": request, "sponsors": db_sponsors, "msg": msg})
+    else:
+        msg = f"Player does not exist. Are you sure that player ID is correct?"
+        return templates.TemplateResponse("sponsors.html", {"request": request, "sponsors": db_sponsors, "msg": msg})

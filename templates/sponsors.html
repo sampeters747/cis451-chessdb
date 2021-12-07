@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Ratings{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Ratings</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Player ID</th>
+            <th>Company</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in sponsors %}
+        <tr>
+            <td>{{ s.player.first + " " + s.player.last }}</td>
+            <td>{{ s.player_id }}</td>         
+            <td>{{ s.company_name }}</td>
+            <td>{{ s.amount }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<form class="pure-form" action="/sponsors/total" method="POST">
+    <fieldset>
+        <legend>Find the total amount of money a player has received in sponsorships</legend>
+        <input name="player_id" type="number" step="1" placeholder="Player ID" />
+        <button type="submit" class="pure-button pure-button-primary">Find Player Total</button>
+    </fieldset>
+</form>
+
+{% endblock %}

@@ -1,3 +1,4 @@
+-- Players
 INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (1, 1955, "Dave", "Smith");
 INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (2, 1990, "Magnus", "Carlsen");
 INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (3, 1992, "Liren", "Ding");
@@ -7,4 +8,103 @@ INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (6, 1
 INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (7, 1991, "Sam", "Shankland");
 INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (8, 2000, "Jeffery", "Xiong");
 INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (9, 1996, "Richard", "Rapport");
-INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (10, 1983, "Alexander", "Grischuk");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (10, 1994, "Eric", "Rosen");
+INSERT INTO `chess`.`players` (`id`, `birth_year`, `first`, `last`) VALUES (11, 1901, "Sam", "Peters");
+
+-- Organizations
+INSERT INTO `chess`.`organizations` (`code`, `name`) VALUES ("FIDE", "International Chess Federation");
+INSERT INTO `chess`.`organizations` (`code`, `name`) VALUES ("USCF", "United States Chess Federation");
+INSERT INTO `chess`.`organizations` (`code`, `name`) VALUES ("CCOM", "Chess.com");
+INSERT INTO `chess`.`organizations` (`code`, `name`) VALUES ("LICHESS", "Lichess.org");
+
+-- Ratings
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (1, "LICHESS", NULL, 1502);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (2, "FIDE", "Grandmaster", 2856);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (2, "CCOM", "Grandmaster", 2910);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (3, "FIDE", "Grandmaster", 2799);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (4, "FIDE", "Grandmaster", 2804);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (5, "FIDE", "Grandmaster", 2792);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (6, "FIDE", "Grandmaster", 2772);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (7, "FIDE", "Grandmaster", 2708);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (8, "FIDE", "Grandmaster", 2602);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (9, "FIDE", NULL, 1432);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (10,"FIDE", "IM", 2405);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (11,"LICHESS", NULL, 1400);
+INSERT INTO `chess`.`ratings` (`player_id`, `org_code`, `title`, `rating_number`) VALUES (11,"CCOM", NULL, 1300);
+
+-- Tournaments
+INSERT INTO `chess`.`tournaments` (`id`, `org_code`, `name`, `year`) VALUES (1, "FIDE", "World Championship", 2022);
+INSERT INTO `chess`.`tournaments` (`id`, `org_code`, `name`, `year`) VALUES (2, "FIDE", "World Championship", 2021);
+INSERT INTO `chess`.`tournaments` (`id`, `org_code`, `name`, `year`) VALUES (3, "FIDE", "World Championship", 2020);
+INSERT INTO `chess`.`tournaments` (`id`, `org_code`, `name`, `year`) VALUES (4, "FIDE", "World Championship", 2019);
+INSERT INTO `chess`.`tournaments` (`id`, `org_code`, `name`, `year`) VALUES (5, "LICHESS", "Weekly Open #51", 2018);
+
+-- Tournament Players
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (2, 1);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (3, 1);
+
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (2, 2);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (4, 2);
+
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (2, 3);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (5, 3);
+
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (2, 4);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (6, 4);
+
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (1, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (6, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (10, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (11, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (3, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (4, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (7, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (8, 5);
+INSERT INTO `chess`.`tournamententry` (`player_id`, `tournament_id`) VALUES (9, 5);
+
+-- Sponsors
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (2, "Nike", 5000);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (2, "Red Bull", 1000);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (3, "Adidas", 6000);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (4, "Dell", 100);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (1, "IBM", 10);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (11, "Facebook", 1000);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (4, "Google", 4);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (1, "Cambell's Soup", 1000);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (8, "Logitech", 70);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (9, "Monster Energy", 40);
+INSERT INTO `chess`.`sponsors` (`player_id`, `company_name`, `amount`) VALUES (5, "Gatorade", 2000);
+
+
+-- Games
+2,3 White
+1.e4 d6 2.d4 g6 3.c4 Bg7 4.Nc3 Nc6 5.Be3 e5 6.d5 Nce7 7.c5 Nh6 8.f3 f5 9.cxd6 cxd6 10.Bb5+ Kf8 11.Qa4 f4 12.Bf2 Bf6 13.Nge2 Kg7 14.Rc1 a6 15.O-O g5 16.Rc2 Rb8 17.Bd3 Nf7 18.Rfc1 Qd7 19.Bb6 Qxa4 20.Nxa4 Bd7 21.Nec3 Rbc8 22.Ba5 Bxa4 23.Nxa4 Rxc2 24.Rxc2 Rc8 25.Nb6 Rxc2 26.Bxc2 h5 27.Ba4 g4 28.Bd7 gxf3 29.gxf3 Ng5 30.Kf2 Kf8 31.Nc4 Ng6 32.Bc8 Be7 33.Bxb7 Nh4 34.Nd2 Nh3+ 35.Kf1
+
+2,4 white
+1.c4 g6 2.d4 Bg7 3.e4 d6 4.Nc3 c5 5.dxc5 Bxc3+ 6.bxc3 dxc5 7.Bd3 Nc6 8.f4 Qa5 9.Ne2 Be6 10.f5 O-O-O 11.fxe6 Ne5 12.exf7 Nf6 13.O-O Nxd3 14.Bh6 Ne5 15.Qb3 Nxf7
+
+2,5 white
+1.c4 g6 2.Nc3 Bg7 3.d4 d6 4.e4 Nf6 5.f3 O-O 6.Be3 e5 7.dxe5 dxe5 8.Qxd8 Rxd8 9.Nd5 Nxd5 10.cxd5 c6 11.Bc4 cxd5 12.Bxd5 Nc6 13.Rd1 Be6 14.Bxe6 fxe6 15.Rxd8+ Rxd8 16.Nh3 Nd4 17.Kf2 Rc8 18.Rc1 Rxc1 19.Bxc1 Bf8 20.Be3 Bc5
+
+2,6 white
+1.c4 g6 2.Nc3 Bg7 3.d4 d6 4.e4 Nf6 5.f3 O-O 6.Be3 e5 7.dxe5 dxe5 8.Qxd8 Rxd8 9.Nd5 Nxd5 10.cxd5 c6 11.Bc4 cxd5 12.Bxd5 Nc6 13.Rd1 Be6 14.Bxe6 fxe6 15.Rxd8+ Rxd8 16.Nh3 Nd4 17.Kf2 Rc8 18.Rc1 Rxc1 19.Bxc1 Bf8 20.Be3 Bc5
+
+5,6 black
+1.c4 g6 2.d4 Bg7 3.Nc3 d6 4.e4 e5 5.Nge2 Nf6 6.f3 O-O 7.Bg5 c6 8.d5 Qb6 9.Qd2 cxd5
+10.cxd5 Nbd7 11.Be3 Qa5 12.Nc1 a6 13.a3 Nh5 14.b4 Qd8 15.Nb3 f5 16.O-O-O fxe4
+17.Nxe4 Ndf6 18.Bd3 Bf5 19.Kb1
+
+7,4 tie
+1.c4 g6 2.Nc3
+
+1,2 white
+1.c4 g6
+
+2,6 tie
+1.c4 g6 2.Nc3 Bg7 3.d4 d6 4.e4 Nf6
+
+6,2 white
+1.c4 g6 2.Nc3 Bg7 3.d4 d6
+
+4,2 tie
+1.c4 g6 2.d4 Bg7 3.e4 d6 4.Nc3 c5 5.dxc5
