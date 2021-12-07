@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Summary{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Summary</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<p>
+    I've created a chess game database that stores information basic information about chess players, their ratings (issued by different chess organizations), the game's they've played, the tournaments those games are optionally held in, and the moves played in each of the games.
+</p>
+<p>
+    Each game is stored using two tables, a games table and a moves table. The entries in the games table store general metadata about each game, while each individual move is stored separately in the moves table, allowing someone to query when a certain move occurred in a game, or what games a certain move occurred in.
+</p>
+<p>
+    As previously mentioned, some games might take place in tournaments. For these tournaments, it's expected that some number of players register for the tournament, and an organization that issues chess ratings organizes that tournament.
+</p>
+<p>
+    In the simplified chess world I modeled, players have a single id that uniquely identifies them. They can also have multiple ratings issued by different organizations (like FIDE, USCF, lichess, etc.), and might have some amount of sponsorship income that's recorded in a sponsors table.
+</p>
+
+    <span>Possible future applications of the created database:</span>
+    <ul>
+        <li>
+            Finding every game where a certain board state was ever reached
+        </li>
+        <li>
+            Storing information on individual players and their ratings
+        </li>
+        <li>
+            Recording chess games played
+        </li>
+        <li>
+            Finding a certain players most common opening move
+        </li>
+        <li>
+            Finding the highest rated player in a certain chess organization under the age of 18
+        </li>
+        <li>
+            Storing tournament information
+        </li>
+    </ul>
+
+
+{% endblock %}

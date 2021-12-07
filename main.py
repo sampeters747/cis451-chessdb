@@ -30,6 +30,17 @@ def get_db():
     finally:
         db.close()
 
+@app.get("/summary", response_class=HTMLResponse)
+async def summary_page(request: Request):
+    return templates.TemplateResponse("summary.html", {"request": request})
+
+@app.get("/logical", response_class=HTMLResponse)
+async def logicaldesign_page(request: Request):
+    return templates.TemplateResponse("logical.html", {"request": request})
+
+@app.get("/physical", response_class=HTMLResponse)
+async def physicaldesign_page(request: Request):
+    return templates.TemplateResponse("physical.html", {"request": request})
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):

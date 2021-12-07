@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Logical Design{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Logical Design</h1>
+{% if msg is defined %}
+<h3 style="color:red;font-weight: bold;">{{ msg }}</h3>
+{% endif %}
+<P>
+    I used chen notation to create a diagram showing the logical design of the database. Note: For the tool I used, I wasn't able to underline attributes so instead I bolded any primary keys. Weak entities are represented as pale orange rectangles (ex. the Sponsor table).
+</P>
+<img src="/static/logicaldesign.png" alt="Logical Design Diagram (Chen Notation)">
+
+
+{% endblock %}

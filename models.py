@@ -12,11 +12,14 @@ class Player(Base):
     first = Column(String(18))
     last = Column(String(18))
 
-    # Non-columns
+    # Relationships
     # ratings variable provides easy access to relevant rows in Ratings table by checking what Rating.player_id foreign keys
     # reference the player object
     ratings = relationship("Rating", back_populates="player", cascade="all, delete, delete-orphan")
     tournaments = relationship("TournamentEntry", back_populates="player", cascade="all, delete, delete-orphan")
+    white_games = relationship("Game", foreign_keys='Game.white_id', back_populates="white", cascade="all, delete, delete-orphan")
+    black_games = relationship("Game", foreign_keys='Game.black_id', back_populates="black", cascade="all, delete, delete-orphan")
+    sponsors = relationship("Sponsor", cascade="all, delete, delete-orphan", back_populates="player")
 
 class Organization(Base):
     __tablename__ = "organizations"
@@ -24,7 +27,7 @@ class Organization(Base):
     code = Column(String(10), primary_key=True, index=True)
     name = Column(String(48))
 
-    # Non-column, provides easy access to relevant rows in Ratings table by checking what Rating.org_code foreign keys
+    # Relationships, provides easy access to relevant rows in Ratings table by checking what Rating.org_code foreign keys
     # reference the player object
     issued_ratings = relationship("Rating", back_populates="org", cascade="all, delete, delete-orphan")
     # More non-columns
@@ -38,7 +41,7 @@ class Rating(Base):
     title = Column(String(18), nullable=True)
     rating_number = Column(Integer)
 
-    # Non-columns
+    # Relationships
     # Relating player attribute in Rating class and ratings attribute in Player class, so when one is updated,
     # the other is automatically modified.
     player = relationship("Player", back_populates="ratings")
@@ -52,9 +55,10 @@ class Tournament(Base):
     name = Column(String(36))
     year = Column(Integer)
 
-    # Non-columns
+    # Relationships
     org = relationship("Organization", back_populates="tournaments")
     players = relationship("TournamentEntry", back_populates="tournament")
+    games = relationship("Game", back_populates="tournament")
 
 class TournamentEntry(Base):
     __tablename__ = "tournamententry"
@@ -62,6 +66,43 @@ class TournamentEntry(Base):
     player_id = Column(Integer, ForeignKey("players.id"), nullable=False, primary_key=True)
     tournament_id = Column(Integer, ForeignKey("tournaments.id"), nullable=False, primary_key=True)
 
-    # Non-columns
+    # Relationships
     player = relationship("Player", back_populates="tournaments")
     tournament = relationship("Tournament", back_populates="players")
+
+class Game(Base):
+    __tablename__ = "games"
+    # Columns
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    white_id = Column(Integer, ForeignKey("players.id"), nullable=False)
+    black_id = Column(Integer, ForeignKey("players.id"), nullable=False)
+    tournament_id = Column(Integer, ForeignKey("tournaments.id"), nullable=True)
+    # 0 == black win, 1 == white win, 2 == draw
+    result = Column(Integer, nullable=False)
+
+    # Relationships
+    white = relationship("Player", foreign_keys=[white_id], back_populates="white_games")
+    black = relationship("Player", foreign_keys=[black_id], back_populates="black_games")
+    tournament = relationship("Tournament", back_populates="games")
+    moves = relationship("Move", back_populates="game")
+
+class Move(Base):
+    __tablename__ = "moves"
+    # Columns
+    game_id = Column(Integer, ForeignKey("games.id"), nullable=False, primary_key=True)
+    ply = Column(Integer, nullable=False, primary_key=True)
+    # String representation of move using standard algebraic notation https://en.wikipedia.org/wiki/Algebraic_notation_(chess)
+    move = Column(String(12), nullable=False)
+
+    # Relationships
+    game = relationship("Game", foreign_keys=[game_id], back_populates="moves")
+
+class Sponsor(Base):
+    __tablename__ = "sponsors"
+    # Columns
+    player_id = Column(Integer, ForeignKey("players.id"), nullable=False, primary_key=True)
+    company_name = Column(String(32), nullable=False, primary_key=True)
+    amount = Column(Integer, nullable=False)
+
+    # Relationships
+    player = relationship("Player", foreign_keys=[player_id], back_populates="sponsors")

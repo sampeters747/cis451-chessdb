@@ -83,4 +83,53 @@ class TournamentEntry(TournamentEntryBase):
     class Config:
         orm_mode = True
 
+class GameBase(BaseModel):
+    white_id: int
+    black_id: int
+    tournament_id: Optional[int]
+    result: int
+
+class GameCreate(GameBase):
+    pass
+
+class Game(GameBase):
+    id: int
+    white: Player
+    black: Player
+    tournament: Tournament
+    moves: 'Move'
+
+    class Config:
+        orm_mode = True
+
+class MoveBase(BaseModel):
+    game_id: int
+    ply: int
+    move: str
+
+class MoveCreate(MoveBase):
+    pass
+
+class Move(MoveBase):
+    game: Game
+
+    class Config:
+        orm_mode = True
+
+class SponsorBase(BaseModel):
+    player_id: int
+    amount: int
+    company_name: str
+
+class SponsorCreate(SponsorBase):
+    pass
+
+class Sponsor(SponsorBase):
+    player: Player
+
+    class Config:
+        orm_mode = True
+
+
+
 Player.update_forward_refs()
